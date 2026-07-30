@@ -1,0 +1,385 @@
+:root {
+  font-family:
+    'SF Pro Text',
+    'Helvetica Neue',
+    Inter,
+    'PingFang SC',
+    'Hiragino Sans GB',
+    'Microsoft YaHei',
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    sans-serif;
+  color: #1f2937;
+  background: #f3f5f9;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  color: #1f2937;
+  background: linear-gradient(180deg, #f8fafc 0%, #f3f5f9 100%);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+.layout-root {
+  min-height: 100vh;
+  background: transparent;
+}
+
+.app-header {
+  position: sticky;
+  top: 0;
+  z-index: 120;
+  backdrop-filter: saturate(150%) blur(12px);
+  background: rgba(255, 255, 255, 0.8);
+  border-bottom: 1px solid rgba(226, 232, 240, 0.9);
+  padding: 0 24px;
+}
+
+.app-header-inner {
+  height: 72px;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.brand-link {
+  text-decoration: none;
+}
+
+.brand-avatar {
+  background: linear-gradient(135deg, #1f7dff, #5ab0ff);
+  box-shadow: 0 8px 16px rgba(22, 119, 255, 0.2);
+}
+
+.brand-title {
+  margin: 0 !important;
+  color: #0f172a !important;
+  line-height: 1.15;
+  font-weight: 700 !important;
+  letter-spacing: 0.01em;
+}
+
+.brand-subtitle {
+  font-size: 12px;
+  color: #64748b;
+  letter-spacing: 0.01em;
+}
+
+.nav-links {
+  flex: 1;
+  margin-left: 28px;
+}
+
+.nav-link {
+  color: #475569;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 15px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  transition: all 0.24s ease;
+}
+
+.nav-link:hover {
+  color: #1677ff;
+  background: #edf4ff;
+}
+
+.nav-link.active {
+  color: #1677ff;
+  background: #eaf2ff;
+}
+
+.user-area .user-tag {
+  border-radius: 999px;
+  padding-inline: 12px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+}
+
+.content {
+  width: 100%;
+  max-width: 1200px;
+  margin: 22px auto;
+  padding: 0 16px 20px;
+}
+
+.hero-card,
+.section-card,
+.house-card {
+  border-radius: 18px;
+  border: 1px solid #ebeff5;
+  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.05);
+}
+
+.hero-surface {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.hero-surface::before {
+  content: '';
+  position: absolute;
+  width: 460px;
+  height: 460px;
+  left: calc(var(--mx, 72%) - 230px);
+  top: calc(var(--my, 25%) - 230px);
+  background: radial-gradient(circle, rgba(79, 140, 255, 0.2) 0%, rgba(79, 140, 255, 0) 72%);
+  pointer-events: none;
+  z-index: -1;
+  transition: left 0.25s ease, top 0.25s ease;
+}
+
+.hero-tag {
+  border-radius: 999px;
+  font-size: 12px;
+  padding: 2px 10px;
+  border: none;
+  background: #ebf3ff;
+  color: #2563eb;
+}
+
+.hero-title {
+  margin: 12px 0 10px !important;
+  font-size: clamp(24px, 2.5vw, 32px) !important;
+  line-height: 1.35 !important;
+  letter-spacing: -0.005em;
+  color: #1e293b !important;
+  font-weight: 560 !important;
+}
+
+.hero-desc {
+  font-size: 16px;
+  color: #64748b !important;
+  line-height: 1.75;
+  margin-bottom: 0 !important;
+  max-width: 720px;
+}
+
+.hero-side-card {
+  border-radius: 14px;
+  border: 1px solid #e7edf8;
+  background: rgba(255, 255, 255, 0.76);
+  box-shadow: 0 8px 22px rgba(30, 64, 175, 0.08);
+}
+
+.hero-side-item {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  transition: transform 0.2s ease;
+}
+
+.hero-side-item:hover {
+  transform: translateX(3px);
+}
+
+.hero-side-icon {
+  color: #1677ff;
+  font-size: 17px;
+  margin-top: 3px;
+}
+
+.stats-row {
+  margin-top: 20px;
+}
+
+.metric-card {
+  border-radius: 14px;
+  border: 1px solid #edf3ff;
+  background: #fcfdff;
+  box-shadow: none;
+}
+
+.metric-card .ant-statistic-title {
+  font-size: 13px;
+  color: #64748b;
+}
+
+.metric-card .ant-statistic-content {
+  font-size: 22px;
+  line-height: 1.1;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.search-box {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.search-box .ant-input-affix-wrapper,
+.search-box .ant-btn {
+  height: 48px;
+  border-radius: 12px;
+}
+
+.tip-btn {
+  border-radius: 999px;
+  color: #475569;
+}
+
+.hot-icon {
+  color: #ef4444;
+}
+
+.section-card .ant-card-head-title {
+  font-weight: 620;
+  letter-spacing: 0.01em;
+}
+
+.center-box {
+  min-height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.house-card {
+  transition: transform 0.24s ease, box-shadow 0.24s ease;
+}
+
+.house-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 28px rgba(15, 23, 42, 0.1);
+}
+
+.house-card .ant-card-body {
+  padding: 18px;
+}
+
+.house-meta-row {
+  margin-top: 4px;
+  padding-top: 10px;
+  border-top: 1px dashed #e2e8f0;
+}
+
+.house-price {
+  color: #e11d48;
+  font-size: 26px;
+  line-height: 1;
+  font-weight: 620;
+  letter-spacing: -0.01em;
+}
+
+.section-card .ant-typography,
+.house-card .ant-typography,
+.ant-list-item-meta-title,
+.ant-list-item-meta-description {
+  font-weight: 400;
+}
+
+.list-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.timeline-dot {
+  color: #1677ff;
+}
+
+.info-item {
+  height: 100%;
+  padding: 14px;
+  background: #f8fbff;
+  border: 1px solid #eaf0ff;
+  border-radius: 12px;
+}
+
+.info-item .ant-typography {
+  margin-bottom: 0 !important;
+}
+
+.detail-hero {
+  padding: 16px;
+  border-radius: 14px;
+  background: linear-gradient(120deg, #f8fbff, #f1f5ff);
+  border: 1px solid #e9efff;
+}
+
+.rent-card {
+  border-radius: 14px;
+  border: 1px solid #ebeff6;
+}
+
+.stagger-item {
+  opacity: 0;
+  transform: translateY(12px);
+  animation: fade-slide-up 0.5s ease forwards;
+}
+
+.footer {
+  text-align: center;
+  color: #64748b;
+  background: transparent;
+  padding: 24px 16px 32px;
+}
+
+@keyframes fade-slide-up {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 992px) {
+  .app-header {
+    position: static;
+  }
+
+  .nav-links {
+    display: none;
+  }
+
+  .brand-subtitle {
+    display: none;
+  }
+
+  .hero-title {
+    font-size: clamp(22px, 5vw, 28px) !important;
+  }
+}
+
+@media (max-width: 576px) {
+  .content {
+    margin-top: 14px;
+    padding: 0 12px 20px;
+  }
+
+  .app-header {
+    padding: 0 12px;
+  }
+
+  .app-header-inner {
+    height: 62px;
+  }
+
+  .brand-title {
+    display: none;
+  }
+
+  .search-box {
+    grid-template-columns: 1fr;
+  }
+
+  .house-card .ant-card-body {
+    padding: 14px;
+  }
+
+  .house-price {
+    font-size: 28px;
+  }
+}
