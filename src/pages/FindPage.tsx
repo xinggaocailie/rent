@@ -5,6 +5,7 @@ import {
   Card,
   Empty,
   Input,
+  InputNumber,
   List,
   Select,
   Space,
@@ -27,6 +28,22 @@ function FindPage() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [keyword, setKeyword] = useState(searchParams.get('keyword') ?? '');
   const [city, setCity] = useState(searchParams.get('city') ?? '');
+  const [minPrice, setMinPrice] = useState<number | null>(() => {
+    const value = searchParams.get('minPrice');
+    if (!value) {
+      return null;
+    }
+    const parsed = Number(value);
+    return Number.isNaN(parsed) ? null : parsed;
+  });
+  const [maxPrice, setMaxPrice] = useState<number | null>(() => {
+    const value = searchParams.get('maxPrice');
+    if (!value) {
+      return null;
+    }
+    const parsed = Number(value);
+    return Number.isNaN(parsed) ? null : parsed;
+  });
   const [status, setStatus] = useState<'available' | 'rented' | ''>(
     (searchParams.get('status') as 'available' | 'rented' | '') || 'available'
   );
@@ -57,25 +74,37 @@ function FindPage() {
 
   const filteredHouses = useMemo(() => {
     const kw = keyword.trim();
-    if (!kw) {
-      return houses;
-    }
-    return houses.filter(
-      (house) =>
+    return houses.filter((house) => {
+      const matchesKeyword =
+        !kw ||
         house.title.includes(kw) ||
         house.city.includes(kw) ||
         house.district.includes(kw) ||
-        house.address.includes(kw)
-    );
-  }, [houses, keyword]);
+        house.address.includes(kw);
+      const matchesMinPrice = minPrice === null || house.price >= minPrice;
+      const matchesMaxPrice = maxPrice === null || house.price <= maxPrice;
+      return matchesKeyword && matchesMinPrice && matchesMaxPrice;
+    });
+  }, [houses, keyword, minPrice, maxPrice]);
 
   const updateSearch = () => {
+    if (minPrice !== null && maxPrice !== null && minPrice > maxPrice) {
+      message.warning('最低月租不能高于最高月租');
+      return;
+    }
+
     const next = new URLSearchParams();
     if (keyword.trim()) {
       next.set('keyword', keyword.trim());
     }
     if (city.trim()) {
       next.set('city', city.trim());
+    }
+    if (minPrice !== null) {
+      next.set('minPrice', String(minPrice));
+    }
+    if (maxPrice !== null) {
+      next.set('maxPrice', String(maxPrice));
     }
     if (status) {
       next.set('status', status);
@@ -95,7 +124,7 @@ function FindPage() {
             找房中心
           </Title>
           <Paragraph type="secondary" style={{ marginBottom: 8 }}>
-            支持按城市与状态筛选，并根据关键词过滤标题、区域和地址。你可以组合条件快速定位目标房源。
+            支持按城市、状态与价格区间筛选，并根据关键词过滤标题、区域和地址。你可以组合条件快速定位目标房源。
           </Paragraph>
         </Space>
         <Space wrap style={{ width: '100%' }} size={[10, 10]}>
@@ -115,6 +144,22 @@ function FindPage() {
             value={city}
             onChange={(event) => setCity(event.target.value)}
             onPressEnter={updateSearch}
+          />
+          <InputNumber
+            style={{ minWidth: 160 }}
+            min={0}
+            precision={0}
+            placeholder="最低月租"
+            value={minPrice}
+            onChange={(value) => setMinPrice(typeof value === 'number' ? value : null)}
+          />
+          <InputNumber
+            style={{ minWidth: 160 }}
+            min={0}
+            precision={0}
+            placeholder="最高月租"
+            value={maxPrice}
+            onChange={(value) => setMaxPrice(typeof value === 'number' ? value : null)}
           />
           <Select
             style={{ minWidth: 160 }}
