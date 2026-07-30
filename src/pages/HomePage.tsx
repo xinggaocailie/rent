@@ -35,6 +35,20 @@ import type { House } from '../types/rent';
 const { Paragraph, Text, Title } = Typography;
 
 const hotTips = ['静安区', '浦东新区', '一居室', '地铁'];
+const heroSlides = [
+  {
+    title: '住对地方，安心加倍～',
+    desc: '帮你找到合拍小窝，交通、预算、生活配套都刚刚好，让每一次回家都轻松又踏实。'
+  },
+  {
+    title: '找到合拍小窝，生活轻松开场～',
+    desc: '一键筛选地段、租金和户型，帮你更快锁定真正适合长期生活的理想住处。'
+  },
+  {
+    title: '选对这间房，日子越住越香～',
+    desc: '从看房到租赁流程顺滑衔接，减少反复对比的时间，把精力留给更重要的生活。'
+  }
+];
 
 function HomePage() {
   const { isLoggedIn } = useAuth();
@@ -43,6 +57,7 @@ function HomePage() {
   const [loading, setLoading] = useState(false);
   const [houses, setHouses] = useState<House[]>([]);
   const [glowPosition, setGlowPosition] = useState({ x: 70, y: 25 });
+  const [activeSlide, setActiveSlide] = useState(0);
 
   const loadAvailableHouses = async () => {
     if (!isLoggedIn) {
@@ -65,6 +80,14 @@ function HomePage() {
   useEffect(() => {
     void loadAvailableHouses();
   }, [isLoggedIn]);
+
+  useEffect(() => {
+    const timer = window.setInterval(() => {
+      setActiveSlide((prev) => (prev + 1) % heroSlides.length);
+    }, 3600);
+
+    return () => window.clearInterval(timer);
+  }, []);
 
   const filteredHouses = useMemo(() => {
     const kw = keyword.trim();
@@ -101,12 +124,23 @@ function HomePage() {
         <Row gutter={[24, 24]} align="middle">
           <Col xs={24} lg={15}>
             <Tag className="hero-tag">城市租房服务平台</Tag>
-            <Title level={2} className="hero-title">
-              找到适合你的安心住所
-            </Title>
-            <Paragraph className="hero-desc">
-              与 rent-server 实时联动，房源状态秒级更新。支持快速搜索、详情查看与在线租赁，帮你把找房流程变得更简单。
-            </Paragraph>
+            <div className="hero-copy-wrap" key={heroSlides[activeSlide].title}>
+              <Title level={2} className="hero-title">
+                {heroSlides[activeSlide].title}
+              </Title>
+              <Paragraph className="hero-desc">{heroSlides[activeSlide].desc}</Paragraph>
+            </div>
+            <Space size={8} style={{ marginTop: 10 }}>
+              {heroSlides.map((slide, index) => (
+                <button
+                  key={slide.title}
+                  type="button"
+                  className={`hero-dot${index === activeSlide ? ' active' : ''}`}
+                  aria-label={`切换到第 ${index + 1} 条文案`}
+                  onClick={() => setActiveSlide(index)}
+                />
+              ))}
+            </Space>
             <div className="search-box">
               <Input
                 size="large"

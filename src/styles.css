@@ -166,6 +166,31 @@ body {
   max-width: 720px;
 }
 
+.hero-copy-wrap {
+  margin-top: 12px;
+  animation: hero-copy-in 0.45s ease;
+}
+
+.hero-dot {
+  width: 8px;
+  height: 8px;
+  border: none;
+  border-radius: 999px;
+  background: #cbd5e1;
+  padding: 0;
+  cursor: pointer;
+  transition: all 0.22s ease;
+}
+
+.hero-dot:hover {
+  background: #93c5fd;
+}
+
+.hero-dot.active {
+  width: 20px;
+  background: #2563eb;
+}
+
 .hero-side-card {
   border-radius: 14px;
   border: 1px solid #e7edf8;
@@ -329,6 +354,18 @@ body {
 }
 
 @keyframes fade-slide-up {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes hero-copy-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
   to {
     opacity: 1;
     transform: translateY(0);
